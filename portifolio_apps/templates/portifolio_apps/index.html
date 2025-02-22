@@ -1,0 +1,182 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="icon" href="{% static 'images/logoFT.webp' %}" type="image/webp">
+    <style>
+        /* Estilos gerais */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        /* Cabeçalho */
+        header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-image: url('{% static "images/logoFT.webp" %}');
+            background-size: cover;
+            background-position: center;
+            height: 150px;
+            color: white;
+            text-align: center;
+        }
+
+        header nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 15px;
+        }
+
+        header nav ul li a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            font-size: 20px;
+            padding: 10px 20px;
+            border: 2px solid white;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        header nav ul li a:hover {
+            background-color: white;
+            color: #363636;
+        }
+
+        /* Rodapé */
+        footer {
+            background-color: #363636;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        /* Estilo da seção Profile */
+        #profile {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 20px; /* Espaçamento entre texto e imagem */
+            padding: 20px;
+        }
+
+        #profile .text {
+            flex: 1; /* Texto ocupa 50% da largura */
+            text-align: justify;
+            padding-right: 20px;
+        }
+
+        #profile .photo {
+            flex: 1; /* Foto ocupa 50% da largura */
+            display: flex;
+            justify-content: center; /* Centraliza horizontalmente a imagem */
+            align-items: center;
+        }
+
+        #profile .photo img {
+            border-radius: 50%; /* Torna a imagem redonda */
+            max-width: 300px; /* Limita o tamanho máximo da imagem */
+            width: 100%; /* A imagem ocupa toda a largura disponível */
+            height: auto; /* Mantém a proporção da imagem */
+            object-fit: cover; /* Ajusta o conteúdo da imagem ao container */
+        }
+
+        /* Ocultar seções */
+        .hidden {
+            display: none;
+        }
+    </style>
+    <script>
+        // Função para alternar entre seções
+        function showSection(sectionId) {
+            // Esconde todas as seções
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => {
+                section.classList.add('hidden');
+                section.style.display = "none"; // Garante que a seção seja escondida completamente
+            });
+
+            // Mostra apenas a seção selecionada
+            const activeSection = document.getElementById(sectionId);
+            if (activeSection) {
+                activeSection.classList.remove('hidden');
+                activeSection.style.display = "flex"; // Garante que a seção seja exibida
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            // Exibe a seção inicial
+            showSection('profile');
+        });
+    </script>
+</head>
+<body>
+    <!-- Cabeçalho -->
+    <header>
+        <nav>
+            <ul>
+                <li><a href="javascript:void(0)" onclick="showSection('profile')">Profile</a></li>
+                <li><a href="javascript:void(0)" onclick="showSection('data-analysis')">Data Analysis</a></li>
+                <li><a href="javascript:void(0)" onclick="showSection('data-visualization')">Data Visualization</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Seção Profile -->
+    <div id="profile" class="container section">
+        <div class="text">
+            <h2>Profile</h2>
+            <p>
+                Welcome to my portfolio! My name is Felipe Tanure, and I am a civil engineer specialized in data analysis. I have successfully worked on projects involving data cleaning, predictive modeling, and dashboard creation to provide actionable insights. My experience includes automating greenhouse gas emission monitoring systems, creating advanced dashboards for resource tracking, and conducting geospatial analyses using Python and QGIS. Proficient in Python, SQL, Advanced Excel, and data visualization tools such as Power BI and QGIS, I am passionate about using data to drive decision-making and contribute to impactful, sustainable projects.
+            </p>
+            <p>
+                Feel free to connect with me:<br>
+                <strong>Email:</strong> <a href="mailto:felipe.gintanure@gmail.com">felipe.gintanure@gmail.com</a><br>
+                <strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/felipefariastanure/" target="_blank">linkedin.com/in/felipefariastanure</a>
+            </p>
+        </div>
+        <div class="photo">
+            <img src="{% static 'images/profile.jpg' %}" alt="My Profile Photo">
+        </div>
+    </div>
+
+    <!-- Seção Data Analysis -->
+    <div id="data-analysis" class="container section hidden">
+        <h2>Data Analysis</h2>
+        <p>Here are the Python codes used for data analysis:</p>
+        <ul>
+            <li><a href="{% static 'images/Credit_card_dataanalysis.ipynb' %}" download>Download: Analysis 1 - Fraud Transactions in Credit Card</a></li>
+            <li><a href="/static/code/analysis2.py" download>Download: Analysis 2 - Predictive Modeling</a></li>
+        </ul>
+        <p>Description: The data was analyzed to identify patterns and trends important for decision-making to indentify the amount of fraud trasactions and predict a modeling to identify new frauds.</p>
+    </div>
+
+    <!-- Seção Data Visualization -->
+    <div id="data-visualization" class="container section hidden">
+        <h2>Data Visualization</h2>
+        <p>Upload charts to represent the analyses performed:</p>
+        <form action="/upload" method="post" enctype="multipart/form-data">
+            <label for="file">Select the chart:</label>
+            <input type="file" id="file" name="file" accept="image/*">
+            <button type="submit">Upload</button>
+        </form>
+    </div>
+
+    <!-- Rodapé -->
+    <footer>
+        <p>Felipe Tanure | Email: felipe.gintanure@gmail.com | <a href="https://www.linkedin.com/in/felipefariastanure/" target="_blank">LinkedIn</a></p>
+    </footer>
+</body>
+</html>
